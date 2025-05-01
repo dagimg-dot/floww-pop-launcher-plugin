@@ -1,0 +1,13 @@
+(
+    name: "Floww workflows plugin",
+    description: "Syntax: fl <workflow_name>\nExample: fl work",
+    bin: (path: "floww.py"),
+    icon: Name("system-run-symbolic"),
+    query: (
+        regex: "^(fl)",
+        help: "fl <workflow_name>",
+        isolate: true,
+        no_sort: true,
+        history: true
+    ),
+)
