@@ -16,19 +16,20 @@
 git clone https://github.com/dagimg-dot/floww-pop-launcher-plugin.git
 ```
 
-2. Copy `plugin.ron` and `floww.py` to you pop-launcher plugins folder
+2. Copy the `plugin` folder to your pop-launcher plugins folder as `floww`
 
 > Check [Plugin Directories](https://github.com/pop-os/launcher?tab=readme-ov-file#plugin-directories)
 
 ```bash
 cd floww-pop-launcher-plugin
-cp plugin.ron floww.py ~/.local/share/pop-launcher/plugins
+mkdir -p ~/.local/share/pop-launcher/plugins/floww
+cp plugin/* ~/.local/share/pop-launcher/plugins/floww
 ```
 
-1. Make `floww.py` executable
+3. Make `floww.py` executable
 
 ```bash
-chmod +x ~/.local/share/pop-launcher/plugins/floww.py
+chmod +x ~/.local/share/pop-launcher/plugins/floww/floww.py
 ```
 
 ## Usage
