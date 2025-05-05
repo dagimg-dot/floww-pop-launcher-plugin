@@ -16,20 +16,19 @@
 git clone https://github.com/dagimg-dot/floww-pop-launcher-plugin.git
 ```
 
-2. Copy the `plugin` folder to your pop-launcher plugins folder as `floww`
+1. Install the plugin
 
-> Check [Plugin Directories](https://github.com/pop-os/launcher?tab=readme-ov-file#plugin-directories)
+> Check [Plugin Directories](https://github.com/pop-os/launcher?tab=readme-ov-file#plugin-directories), if you don't know where to put the plugin. By default the `Makefile` assumes its `~/.local/share/pop-launcher/plugins`
 
 ```bash
 cd floww-pop-launcher-plugin
-mkdir -p ~/.local/share/pop-launcher/plugins/floww
-cp plugin/* ~/.local/share/pop-launcher/plugins/floww
+make install
 ```
 
-3. Make `floww.py` executable
+## Uninstall
 
 ```bash
-chmod +x ~/.local/share/pop-launcher/plugins/floww/floww.py
+make uninstall
 ```
 
 ## Usage
@@ -38,4 +37,10 @@ chmod +x ~/.local/share/pop-launcher/plugins/floww/floww.py
 
 ```
 fl <workflow-name>
+```
+
+2. If you want to start the workflow starting from the last workspace, use `fa` instead of `fl`
+
+```
+fa <workflow-name>
 ```

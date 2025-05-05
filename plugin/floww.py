@@ -97,11 +97,14 @@ def get_workflows():
     return workflows
 
 
-def execute_floww_command(workflow_name):
+def execute_floww_command(workflow_name, append):
     debug_log(f"Executing workflow: {workflow_name}")
 
     cmd = f"floww apply {shlex.quote(workflow_name)}"
     debug_log(f"Command string: {cmd}")
+
+    append_arg = "-a" if append else ""
+    debug_log(f"Append enabled: {append}")
 
     try:
         env = get_user_environment()
@@ -130,7 +133,8 @@ def execute_floww_command(workflow_name):
         env["PATH"] = os.pathsep.join(unique_path_parts)
         debug_log(f"Using final modified PATH: {env['PATH']}")
 
-        full_cmd = f"nohup {cmd} >/dev/null 2>&1 &"
+        full_cmd = f"nohup {cmd} {append_arg} >/dev/null 2>&1 &"
+        debug_log(f"Full command: {full_cmd}")
 
         process = subprocess.Popen(
             full_cmd,
@@ -167,6 +171,7 @@ class WorkflowEntry:
 class App(object):
     def __init__(self):
         self.entries = []
+        self.append = False
 
     def append_entries(self, entries):
         for entry in entries:
@@ -182,7 +187,7 @@ class App(object):
         workflow_name = self.entries[index].name
         debug_log(f"Activating workflow: {workflow_name}")
 
-        execute_floww_command(workflow_name)
+        execute_floww_command(workflow_name, self.append)
 
         # Send Close response to pop-launcher
         sys.stdout.write(json.dumps("Close") + "\n")
@@ -199,10 +204,14 @@ class App(object):
 
         # Filter workflows if query contains more than just the prefix
         if query:
-            # Handle both "fl" and "fl " prefixes
-            if query.startswith("fl "):
+            # Handle both "fl", "fl ", "fa" and "fa " prefixes
+            if query.startswith("fl ") or query.startswith("fa "):
+                if query.startswith("fa "):
+                    self.append = True
                 search_term = query[3:].lower()
-            else:
+            elif query.startswith("fl") or query.startswith("fa"):
+                if query.startswith("fa"):
+                    self.append = True
                 search_term = query[2:].lower()
 
             if search_term:

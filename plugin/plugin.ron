@@ -4,7 +4,7 @@
     bin: (path: "floww.py"),
     icon: Name("system-run-symbolic"),
     query: (
-        regex: "^(fl)",
+        regex: "^(fl|fa)",
         help: "fl <workflow_name>",
         isolate: true,
         no_sort: true,
